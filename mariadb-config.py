@@ -34,7 +34,7 @@ class Employee:
         new_employee = """insert into employee ( first_name, last_name ) values (%s, %s)"""
         cursor.execute(new_employee, (self.first, self.last))
 
-rach = Employee('Dan', 'Smith')
+dan = Employee('Dan', 'Smith')
 
 
 ###Working on adding variable length column names to expand SQL statement

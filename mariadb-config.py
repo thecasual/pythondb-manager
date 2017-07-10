@@ -1,31 +1,46 @@
 #!/usr/bin/python
 import mysql.connector as mariadb
 
+mariadb_connection = mariadb.connect(host='10.20.0.7', port='3306', user='thecasual', password='!QAZ2wsx', database='project', autocommit=True, buffered=True)
+cursor = mariadb_connection.cursor()
 
-def tableprint(tablename):
-    if tablename in (table_list):
+class Employee:
+
+    def __init__(self, first, last):
+        self.first = first
+        self.last = last
+
+    def get_column_len(self):
+        cursor.execute("""desc %s""" % (self))
+        data = cursor.fetchall()
+        length = 0
+        for row in data:
+            length += 1
+        column_size=(length - 1)
+
+    def tableprint(tablename):
         cursor.execute("""select * from %s""" % (tablename))
         data = cursor.fetchall()
         for row in data:
             print(row)
-    else:
-        print("{} is not a valid table".format(tablename))
 
-def rowprint(columnname):
-    cursor.execute(""" select * from projects where id=%s""" % (columnname))
-    data = cursor.fetchall()
-    for row in data:
-        print(row)
+    def rowprint(columnname):
+        cursor.execute(""" select * from projects where id=%s""" % (columnname))
+        data = cursor.fetchall()
+        for row in data:
+            print(row)
 
-mariadb_connection = mariadb.connect(host='10.20.0.6', port='3306', user='thecasual', password='waterfall', database='python')
-cursor = mariadb_connection.cursor()
+    def add_employee(self):
+        new_employee = """insert into employee ( first_name, last_name ) values (%s, %s)"""
+        cursor.execute(new_employee, (self.first, self.last))
 
-cursor.execute("""show tables;""")
-table_list = cursor.fetchall()
+rach = Employee('Dan', 'Smith')
 
-#databasemod = input("id,name,begin_date or end_date?")
-databasemod="projects"
-tableprint(databasemod)
-#rowprint(databasemod)
+
+###Working on adding variable length column names to expand SQL statement
+#print("""insert into employee ( """ + '%s, ' * int(column_size) + """ ) """)
+
+#Employee.tableprint("employee")
+cursor.close()
 
 

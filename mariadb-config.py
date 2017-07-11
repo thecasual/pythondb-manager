@@ -16,7 +16,7 @@ class Employee:
         length = 0
         for row in data:
             length += 1
-        column_size=(length - 1)
+        return (length - 2)
 
     def tableprint(tablename):
         cursor.execute("""select * from %s""" % (tablename))
@@ -35,12 +35,12 @@ class Employee:
         cursor.execute(new_employee, (self.first, self.last))
 
 dan = Employee('Dan', 'Smith')
-
+column_size = Employee.get_column_len('employee')
 
 ###Working on adding variable length column names to expand SQL statement
-#print("""insert into employee ( """ + '%s, ' * int(column_size) + """ ) """)
+print("""insert into employee ( """ + '%s, ' * int(column_size) + "%s"" ) """)
 
 #Employee.tableprint("employee")
-cursor.close()
+#cursor.close()
 
 
